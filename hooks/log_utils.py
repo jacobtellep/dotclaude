@@ -38,13 +38,6 @@ def log_dir() -> Path:
     return d
 
 
-def markers_dir() -> Path:
-    """Return the centralized markers/ directory (state/skip files)."""
-    d = _base_dir() / "markers"
-    d.mkdir(parents=True, exist_ok=True)
-    return d
-
-
 def session_summaries_dir() -> Path:
     """Return the centralized session_summaries/ directory."""
     d = _base_dir() / "session_summaries"

@@ -1,9 +1,12 @@
 #!/bin/bash
 
-# ANSI color codes using $'...' syntax for proper escape interpretation
+# ANSI color codes
+MAGENTA=$'\033[1;35m'
+BADGE=$'\033[1;37;45m'       # bold white on magenta background
 RED=$'\033[1;31m'
 CYAN=$'\033[1;36m'
 YELLOW=$'\033[1;33m'
+DIM=$'\033[2m'
 RESET=$'\033[0m'
 
 # Read JSON input (required by Claude Code)
@@ -15,7 +18,7 @@ cd "${cwd:-.}" 2>/dev/null || exit
 
 # Check if in a git repo
 if ! git rev-parse --is-inside-work-tree &>/dev/null; then
-    echo "Not a git repo"
+    echo "${MAGENTA}╔═${BADGE} ◆ CLAUDE ${MAGENTA}═╡${RESET} Not a git repo ${MAGENTA}║${RESET}"
     exit 0
 fi
 
@@ -44,5 +47,5 @@ else
     ago="no commits"
 fi
 
-# Output the status line with colors
-echo "${RED}${repo}${RESET} (${CYAN}${branch}${RESET}) - ${YELLOW}${ago}${RESET}"
+# Output the framed status line
+echo "${MAGENTA}╔═${BADGE} ◆ CLAUDE ${MAGENTA}═╡${RESET} ${RED}${repo}${RESET} ${DIM}(${RESET}${CYAN}${branch}${RESET}${DIM})${RESET} ${DIM}│${RESET} ${YELLOW}${ago}${RESET} ${MAGENTA}║${RESET}"
