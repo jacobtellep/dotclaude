@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "plugins": {
+    "code-simplifier@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/jacobtellep/.claude/plugins/cache/claude-plugins-official/code-simplifier/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-01-12T16:53:57.379Z",
+        "lastUpdated": "2026-01-12T16:53:57.379Z"
+      }
+    ]
+  }
+}

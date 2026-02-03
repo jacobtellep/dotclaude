@@ -1,0 +1,53 @@
+# Machine-specific settings
+settings.local.json
+
+# Session/project data (large, machine-specific)
+projects/
+session-env/
+session_summaries/
+shell-snapshots/
+debug/
+file-history/
+paste-cache/
+plans/
+project-logs/
+tasks/
+todos/
+
+# Plugin downloaded files (reinstallable)
+plugins/cache/
+plugins/marketplaces/
+plugins/repos/
+plugins/install-counts-cache.json
+plugins/known_marketplaces.json
+
+# Skill execution logs
+skills/logs/
+
+# Analytics/telemetry
+telemetry/
+statsig/
+
+# Usage history/stats
+history.jsonl
+stats-cache.json
+
+# IDE/cache state
+ide/
+agents/
+cache/
+.history/
+
+# OS/state files
+.context_loaded
+.DS_Store
+
+# Logs
+*.log
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Misc generated
+.git/
