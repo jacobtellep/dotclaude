@@ -1,6 +1,18 @@
 # Machine-specific settings
 settings.local.json
 
+# Local backups with timestamps
+backups/
+
+# MCP authentication cache
+mcp-needs-auth-cache.json
+
+# Personal usage analytics
+usage-data/
+
+# Server-fetched plugin cache
+plugins/blocklist.json
+
 # Session/project data (large, machine-specific)
 projects/
 session-env/

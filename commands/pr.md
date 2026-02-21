@@ -1,5 +1,5 @@
 ---
-description: Create PR against parent branch and open in browser
+description: Create PR against parent branch, then open in browser
 allowed-tools: Bash
 ---
 
@@ -79,12 +79,17 @@ Show the user what will be in the PR:
 git log --oneline <base-branch>..HEAD
 ```
 
-### 7. Create PR
+### 7. Check for PR Template
 
-Create the pull request with a template body:
+Look for a PR template in the repo:
 
 ```bash
-gh pr create --base <base-branch> --fill --body "$(cat <<'EOF'
+cat .github/pull_request_template.md 2>/dev/null
+```
+
+If a template exists, use it as the body structure and fill in the sections based on the commit context gathered in step 6. If no template exists, use a default body:
+
+```
 ## Summary
 <!-- Brief description of changes -->
 
@@ -93,18 +98,31 @@ gh pr create --base <base-branch> --fill --body "$(cat <<'EOF'
 
 ## Testing
 -
-EOF
-)" --web
+```
+
+### 8. Create PR
+
+Create the pull request (without `--web` — create it first, open after):
+
+```bash
+gh pr create --base <base-branch> --fill --body "<filled-body>"
 ```
 
 The `--fill` flag auto-generates the title from commit messages.
-The `--web` flag opens the PR in browser for editing.
 
-### 8. Report Results
+### 9. Open in Browser
+
+After the PR is created, open it in the browser:
+
+```bash
+gh pr view --web
+```
+
+### 10. Report Results
 
 After successful creation:
-- Confirm PR was created
-- Note that it opened in browser for description editing
+- Confirm PR was created with a link to the URL
+- Note that it was opened in browser for review
 
 ## Safety Rules
 

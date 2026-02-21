@@ -1,6 +1,5 @@
 {
   "includeCoAuthoredBy": false,
-  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
@@ -9,17 +8,6 @@
           {
             "type": "command",
             "command": "~/.claude/hooks/pre_tool_use.py",
-            "timeout": 30
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/stop.py",
             "timeout": 30
           }
         ]
@@ -33,5 +21,72 @@
   },
   "enabledPlugins": {
     "code-simplifier@claude-plugins-official": true
+  },
+  "spinnerVerbs": {
+    "mode": "replace",
+    "verbs": [
+      "Consulting the Palantir",
+      "Forging in Mount Doom",
+      "Journeying to Mordor",
+      "Summoning the Ents",
+      "Crossing the Mines of Moria",
+      "Seeking counsel in Rivendell",
+      "Lighting the beacons of Gondor",
+      "Speaking friend and entering",
+      "Riding to Helm's Deep",
+      "Gathering the Fellowship",
+      "Whispering to the Ring",
+      "Deciphering Elvish script",
+      "Scouring the Shire",
+      "Unraveling Saruman's schemes",
+      "Traversing the Paths of the Dead",
+      "Searching the archives of Minas Tirith",
+      "Gazing into Galadriel's mirror",
+      "Sharpening Anduril",
+      "Resting at a bonfire",
+      "Praising the sun",
+      "Kindling the First Flame",
+      "Rolling through fog gates",
+      "Leveling up at Firelink",
+      "Reading a soapstone message",
+      "Retrieving lost souls",
+      "Reversing hollowing",
+      "Parrying the Black Knight",
+      "Linking the fire",
+      "Feeding the Lordvessel",
+      "Traversing the Abyss",
+      "Dying and trying again",
+      "Offering humanity",
+      "Awakening in the Hunter's Dream",
+      "Gaining insight",
+      "Hunting beasts in Yharnam",
+      "Channeling the Old Blood",
+      "Ringing the sinister bell",
+      "Entering the Nightmare",
+      "Communing with the Great Ones",
+      "Performing a visceral attack",
+      "Rallying through the pain",
+      "Seeking eyes on the inside",
+      "Applying blood gems",
+      "Opening the gate to Byrgenwerth",
+      "Fearing the Old Blood",
+      "Granting eyes to a brain",
+      "Ascending to the Nightmare of Mensis",
+      "Using the Force",
+      "Making the Kessel Run",
+      "Consulting the Jedi archives",
+      "Feeling a disturbance in the Force",
+      "Powering up the hyperdrive",
+      "Searching the Death Star plans",
+      "Training on Dagobah",
+      "Negotiating with Jawas",
+      "Deflecting blaster bolts",
+      "Meditating in the Jedi Temple",
+      "Decrypting Imperial transmissions",
+      "Assembling a lightsaber",
+      "Navigating the asteroid field",
+      "Reaching out with feelings",
+      "Executing Order 66"
+    ]
   }
 }
