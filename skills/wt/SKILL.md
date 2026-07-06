@@ -1,6 +1,6 @@
 ---
 name: wt
-description: "Create a git worktree with a new branch off a target branch, copying env files."
+description: "Create a git worktree with a new branch off a target branch, copying env files and installing dependencies."
 user-invocable: true
 disable-model-invocation: true
 argument-hint: "<new-branch> <target-branch>"
@@ -9,7 +9,7 @@ allowed-tools: Bash, Read, Glob, AskUserQuestion
 
 # Git Worktree Creator
 
-Create a git worktree with a new branch based on a target branch, copying env files automatically.
+Create a git worktree with a new branch based on a target branch, copying env files and installing dependencies automatically.
 
 ## Instructions
 
@@ -54,6 +54,8 @@ Check if `NEW_BRANCH` already exists:
 - `git branch --list "$NEW_BRANCH"` (local)
 - `git branch -r --list "origin/$NEW_BRANCH"` (remote, only if `HAS_REMOTE`)
 
+**Important:** `git branch --list` always exits 0 regardless of whether the branch exists. A branch exists only if the command produces **non-empty output**. Check the output, not the exit code.
+
 If the branch exists, use AskUserQuestion with these options:
 1. **Use existing branch** — create worktree using the existing branch
 2. **Pick a new name** — prompt for a different branch name
@@ -72,9 +74,11 @@ If not found, tell the user the target branch doesn't exist and stop.
 ### Step 7 — Build worktree path
 
 1. Sanitize `NEW_BRANCH`: replace `/` with `-`, strip any leading or trailing `-` characters
-2. Construct path: `~/projects/<REPO_NAME>-<SANITIZED_BRANCH>`
+2. Set `PROJECT_DIR=~/projects/worktrees/<REPO_NAME>`
+3. Set `WORKTREE_PATH=<PROJECT_DIR>/<SANITIZED_BRANCH>`
+4. `mkdir -p "$PROJECT_DIR"` (auto-create the scope folder)
 
-Store as `WORKTREE_PATH`.
+Store `WORKTREE_PATH`.
 
 ### Step 8 — Directory conflict check
 
@@ -99,7 +103,24 @@ If the command fails, report the error and stop.
 3. Track how many were copied and their names
 4. If none found, note that no env files were found to copy
 
-### Step 11 — Print summary
+### Step 11 — Install dependencies
+
+After env file copy, detect the package manager from a lockfile present in the worktree and run install:
+
+**Detection order** (first match wins):
+1. `bun.lock` → `bun install`
+2. `yarn.lock` → `yarn install`
+3. `pnpm-lock.yaml` → `pnpm install`
+4. `package-lock.json` → `npm install`
+
+**Behavior:**
+- Run in foreground (blocking) so the user sees output
+- If install fails: warn but don't stop — worktree is still usable
+- If no lockfile found: skip silently (handles non-JS projects)
+
+Track which package manager was used (or that it was skipped) for the summary.
+
+### Step 12 — Print summary
 
 Output the following summary:
 
@@ -110,6 +131,7 @@ Worktree created successfully!
   Based on:    <TARGET_BRANCH>
   Path:        <WORKTREE_PATH>
   Env files:   N copied (<comma-separated list of filenames, or "none found">)
+  Deps:        Installed with <manager> (or "skipped — no lockfile found")
 ```
 
 Do not perform any additional post-setup actions.

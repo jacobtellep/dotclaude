@@ -25,16 +25,32 @@ plans/
 project-logs/
 tasks/
 todos/
+sessions/
+uploads/
+teams/
+daemon/
+jobs/
+
+# Runtime caches and state files
+chrome/
+image-cache/
+.last-cleanup
+.last-update-result.json
+skills/.claude/
 
 # Plugin downloaded files (reinstallable)
 plugins/cache/
 plugins/marketplaces/
 plugins/repos/
+plugins/data/
 plugins/install-counts-cache.json
 plugins/known_marketplaces.json
+plugins/plugin-catalog-cache.json
+plugins/.last_inuse_sweep
 
 # Skill execution logs
 skills/logs/
+skills-retired/logs/
 
 # Analytics/telemetry
 telemetry/

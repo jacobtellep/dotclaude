@@ -1,5 +1,9 @@
 {
+  "env": {
+    "SLASH_COMMAND_TOOL_CHAR_BUDGET": "15000"
+  },
   "includeCoAuthoredBy": false,
+  "model": "claude-fable-5",
   "hooks": {
     "PreToolUse": [
       {
@@ -12,6 +16,38 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PATH=\"$HOME/.nvm/versions/node/v22.14.0/bin:$PATH\" gh-axi",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PATH=\"$HOME/.nvm/versions/node/v22.14.0/bin:$PATH\" chrome-devtools-axi",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PATH=\"$HOME/.nvm/versions/node/v22.14.0/bin:$PATH\" lavish-axi",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
@@ -20,7 +56,25 @@
     "padding": 0
   },
   "enabledPlugins": {
-    "code-simplifier@claude-plugins-official": true
+    "code-simplifier@claude-plugins-official": true,
+    "figma@claude-plugins-official": false,
+    "chrome-devtools-mcp@chrome-devtools-plugins": true,
+    "codex@openai-codex": true,
+    "frontend-design@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "chrome-devtools-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "ChromeDevTools/chrome-devtools-mcp"
+      }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    }
   },
   "spinnerVerbs": {
     "mode": "replace",
@@ -88,5 +142,16 @@
       "Reaching out with feelings",
       "Executing Order 66"
     ]
-  }
+  },
+  "tui": "fullscreen",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark",
+  "verbose": true,
+  "agentPushNotifEnabled": true,
+  "voiceEnabled": true,
+  "skipDangerousModePermissionPrompt": true
 }

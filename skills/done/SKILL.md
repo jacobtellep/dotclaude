@@ -16,11 +16,29 @@ Synthesize the current session into a structured Obsidian note capturing decisio
 VAULT="/Users/jacobtellep/Library/Mobile Documents/iCloud~md~obsidian/Documents/OpenClaw"
 ```
 
-## Step 1 — Determine project name
+## Step 1 — Determine session directory and project name
 
-1. Get the current working directory
-2. If `cwd` equals `$VAULT` (or is directly inside it with no sub-project), set `PROJECT_NAME` to `"general"`
-3. Otherwise, derive `PROJECT_NAME` from `basename "$cwd"` — lowercase, replace spaces with hyphens, strip non-alphanumeric characters except hyphens
+### SESSION_DIR (used for the filesystem path under `Sessions/`)
+
+1. Try to get the git branch name: `git rev-parse --abbrev-ref HEAD 2>/dev/null`
+2. If in a git repo and the branch is **not** `main`, `master`, or `HEAD`:
+   - Sanitize the branch name: lowercase, replace `/` with `-`, strip non-alphanumeric chars except hyphens, trim leading/trailing hyphens
+   - Set `SESSION_DIR` to `{sanitized-branch}-{YYYY-MM-DD}` (e.g., `auth-flow-2026-02-23`)
+3. **Fallback** (not in a git repo, or branch is main/master/HEAD):
+   - If `cwd` equals `$VAULT` (or is directly inside it with no sub-project), set `SESSION_DIR` to `"general"`
+   - Otherwise, derive from `basename "$cwd"` — lowercase, replace spaces with hyphens, strip non-alphanumeric chars except hyphens
+   - No date suffix for fallback dirs (these are persistent project dirs, not feature sessions)
+
+### PROJECT_NAME (used for frontmatter `project:` field and note header)
+
+1. Try to get the repo name from `git remote get-url origin 2>/dev/null` — extract the repo name (strip path prefix and `.git` suffix)
+2. Fallback: `basename "$cwd"` — lowercase, replace spaces with hyphens
+3. If `cwd` equals `$VAULT`, set to `"general"`
+
+### BRANCH_NAME (used for frontmatter `branch:` field)
+
+1. Raw output of `git rev-parse --abbrev-ref HEAD 2>/dev/null`
+2. If not in a git repo, omit the `branch:` field from frontmatter
 
 ## Step 2 — Locate session transcript
 
@@ -98,9 +116,9 @@ Before writing the note, scan all content for sensitive patterns and replace wit
 
 ## Step 7 — Check for existing note
 
-Check if a note already exists for today's date in this project:
+Check if a note already exists for today's date in this session directory:
 ```bash
-ls "${VAULT}/Sessions/${PROJECT_NAME}/$(date +%Y-%m-%d)"*.md 2>/dev/null
+ls "${VAULT}/Sessions/${SESSION_DIR}/$(date +%Y-%m-%d)"*.md 2>/dev/null
 ```
 
 If found, you will overwrite it (same session, updated capture).
@@ -109,12 +127,12 @@ If found, you will overwrite it (same session, updated capture).
 
 1. Create the directory if needed:
    ```bash
-   mkdir -p "${VAULT}/Sessions/${PROJECT_NAME}"
+   mkdir -p "${VAULT}/Sessions/${SESSION_DIR}"
    ```
 
 2. Write the note to:
    ```
-   ${VAULT}/Sessions/${PROJECT_NAME}/${YYYY-MM-DD}-${TOPIC_SLUG}.md
+   ${VAULT}/Sessions/${SESSION_DIR}/${YYYY-MM-DD}-${TOPIC_SLUG}.md
    ```
 
    If overwriting an existing note with a different slug, delete the old file first.
@@ -125,6 +143,7 @@ If found, you will overwrite it (same session, updated capture).
 ---
 date: YYYY-MM-DD
 project: {PROJECT_NAME}
+branch: {BRANCH_NAME}
 tags:
   - session-note
   - {tag1}
@@ -135,6 +154,7 @@ session-id: "{SESSION_ID}"
 > [!info] Session Note
 > **Date:** YYYY-MM-DD
 > **Project:** {PROJECT_NAME}
+> **Branch:** {BRANCH_NAME}
 > **Daily Note:** [[Daily Notes/YYYY-MM-DD]]
 
 ## Summary

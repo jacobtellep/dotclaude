@@ -79,7 +79,11 @@ Show the user what will be in the PR:
 git log --oneline <base-branch>..HEAD
 ```
 
-### 7. Check for PR Template
+### 7. Pre-PR Verification
+
+Before creating the PR, run the **check-review** skill (fresh-context adversarial review of the diff) and, if a spec/plan/acceptance criteria exists for this work, the **check-plan** skill. Fix Critical findings before proceeding; summarize remaining Important findings in the PR body under a `## Review notes` heading. Include the `REVIEW:` verdict line in your final report.
+
+### 8. Check for PR Template
 
 Look for a PR template in the repo:
 
@@ -100,7 +104,7 @@ If a template exists, use it as the body structure and fill in the sections base
 -
 ```
 
-### 8. Create PR
+### 9. Create PR
 
 Create the pull request (without `--web` — create it first, open after):
 
@@ -110,7 +114,7 @@ gh pr create --base <base-branch> --fill --body "<filled-body>"
 
 The `--fill` flag auto-generates the title from commit messages.
 
-### 9. Open in Browser
+### 10. Open in Browser
 
 After the PR is created, open it in the browser:
 
@@ -118,7 +122,7 @@ After the PR is created, open it in the browser:
 gh pr view --web
 ```
 
-### 10. Report Results
+### 11. Report Results
 
 After successful creation:
 - Confirm PR was created with a link to the URL

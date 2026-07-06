@@ -30,17 +30,17 @@ If `$ARGUMENTS` is provided, parse it in this order:
 - Look for `--type TYPE` or `-t TYPE` flag
 - Look for `--scope SCOPE` or `-s SCOPE` flag
 - If flags are found, extract remaining text as description and construct message: `type(scope): description`
-- Proceed to step 2 with the constructed message
+- Proceed to step 3 with the constructed message
 
 **Step 1b: Check for complete conventional commit message**
 - If `$ARGUMENTS` starts with a conventional commit type (`feat:`, `fix:`, `docs:`, etc.) or pattern (`type(scope):`), treat it as a complete commit message
 - Use the message as-is
-- Proceed to step 2 with the provided message
+- Proceed to step 3 with the provided message
 
 **Step 1c: Treat as contextual instructions**
 - If neither flags nor conventional commit pattern detected, treat `$ARGUMENTS` as contextual instructions
 - Store these instructions to guide file selection and commit message generation
-- Continue to step 2, but use the contextual instructions to filter which changes to commit
+- Continue to step 3, but use the contextual instructions to filter which changes to commit
 
 **Usage examples:**
 - `/commit "fix: resolve login bug"` → Use message directly for all staged changes
@@ -48,7 +48,17 @@ If `$ARGUMENTS` is provided, parse it in this order:
 - `/commit only commit the changes related to the change we just finished` → Use contextual instructions to filter changes
 - `/commit commit the authentication changes` → Use contextual instructions to find auth-related files
 
-### 2. Gather Context
+### 2. Pre-flight Verification
+
+Before staging anything, run the verification gate:
+
+```bash
+bash ~/.claude/skills/check-code/scripts/verify.sh
+```
+
+Include the `VERIFY:` line verbatim in your final report. If it contains `FAIL` for failures introduced by the changes being committed, stop and ask before committing (pre-existing baseline failures: note them and proceed).
+
+### 3. Gather Context
 
 Run these commands to understand the current state:
 
@@ -64,7 +74,7 @@ If contextual instructions were provided in step 1c, also review:
 - File paths and content to match against the contextual instructions
 - Related files that might be part of the same change
 
-### 3. Analyze Changes
+### 4. Analyze Changes
 
 **If contextual instructions were provided:**
 - Filter files/changes based on the contextual instructions
@@ -89,7 +99,7 @@ Keep related changes together. For example:
 - Package.json changes with lock file = one commit
 - Unrelated config changes = separate from feature work
 
-### 4. Generate Commit Messages
+### 5. Generate Commit Messages
 
 **If a commit message was already provided** (from step 1a or 1b), use it as-is.
 
@@ -117,7 +127,7 @@ Keep related changes together. For example:
 - Focus on the "why" when relevant
 - If contextual instructions provide context, incorporate it naturally into the description
 
-### 5. Create Commits
+### 6. Create Commits
 
 **If contextual instructions were provided:**
 - Stage only the files that match the contextual filter: `git add <filtered-files>`
@@ -138,7 +148,7 @@ Keep related changes together. For example:
    )"
    ```
 
-### 6. Report Results
+### 7. Report Results
 
 After completing all commits:
 - List all commits created with their messages
