@@ -1,8 +1,16 @@
 # Claude Code adapter
 
-## Browser testing
+## Browsers
 
-Use `playwright-cli` (shell) for browser testing and validation before any other browser tool.
+Automate with `playwright-cli` (shell): driving pages, forms, assertions.
+Diagnose with the Chrome DevTools MCP: performance traces, Lighthouse, heap snapshots.
+Use my running Chrome via `claude-in-chrome`: signed-in sessions, open tabs, my real profile.
+
+Playwright ships CLI-first, Chrome DevTools MCP-first — each is that vendor's own recommendation.
+
+## Pull requests
+
+Before writing any PR body — `gh pr create`, `gh pr edit --body`, or a PR you decided to open yourself — invoke the `pr-description` skill and follow it.
 
 ## Personal reference files
 

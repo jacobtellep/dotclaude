@@ -47,7 +47,7 @@ SEP=$'\xee\x82\xb0'     # U+E0B0 right-pointing divider
 CAP_R=$'\xee\x82\xb4'   # U+E0B4 right half circle
 
 # Robot rather than a bolt, which reads as fast mode. Alternatives, all verified
-# present in JetBrainsMonoNerdFontMono: run statusline-icons.sh to compare.
+# present in JetBrainsMonoNerdFontMono:
 #   $'\xf3\xb1\x99\xbe' U+F167E robot outline   $'\xef\x92\x98' U+F498  hubot
 #   $'\xf3\xb1\x9c\x99' U+F1719 robot happy     $'\xf3\xb0\xa7\x9a' U+F09DA brain
 ICON_MODEL=$'\xf3\xb0\x9a\xa9'   # U+F06A9 nf-md-robot
