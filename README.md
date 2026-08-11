@@ -45,15 +45,6 @@ Highlights worth stealing:
 The interview skill has an "educate-to-decide" ladder for when I answer "I don't know": first try to answer from the codebase, then present previewed options where every tradeoff claim must cite file:line evidence or be labeled an assumption.
 The design spec behind this system lives at [specs/work-reconciler-v1.md](specs/work-reconciler-v1.md) and is itself a working instance of the format.
 
-### Independent teammates
-
-`braintrust` convenes the Cursor CLI and the OpenAI Codex CLI as an adversarial panel, with Claude as the driver.
-Both run auto-mode and strictly read-only, with live web search.
-The key rule: Claude forms its own provisional answer first, then dispatches the panel with a refute framing ("find the strongest reasons this is WRONG").
-Never outsource the thinking; outsource the checking.
-`cursor-research` and `codex-research` are the single-teammate versions for lighter cross-checks.
-Missing subscriptions degrade gracefully but never silently.
-
 ### Communication and teaching
 
 - `dm` drafts Slack messages in my voice (from a VOICE.md style file). Client-facing messages become drafts I send myself, which avoids Slack's "via Claude" badge; internal messages direct-send after I approve the text.
@@ -84,8 +75,7 @@ The retirement decision was itself recorded as a decision of record in the /work
 
 ## The harness
 
-- **SessionStart hooks** run three self-describing "agent experience" CLIs whose usage output lands directly in session context: `gh-axi` (GitHub operations), `chrome-devtools-axi` (browser automation from Bash, no MCP schema overhead), and `lavish-axi` (interactive HTML review surfaces). All are npm packages built for agents rather than humans: token-dense, machine-parseable, pipeable.
-- **PreToolUse hook** ([hooks/pre_tool_use.py](hooks/pre_tool_use.py)) is a small Bash safety gate: blocks `chmod 777` and raw-disk `dd`, warns on `.env` access.
+- **PreToolUse hooks** block unsafe shell commands and provide [recursive deletion approval](hooks/rm_rf_guard.py): Claude Code opens its native permission dialog, while Codex requires a scoped one-time token before releasing a canonical absolute-target command.
 - **Plugins:** codex (OpenAI Codex integration), chrome-devtools-mcp, code-simplifier, frontend-design.
 - **Voice and opinions files** (`~/OPINIONS.md`, `~/VOICE.md`, not in this repo): curated stances and writing style that agents read on demand. Curated files win over auto-memory on conflict.
 - **[bin/ralph.sh](bin/ralph.sh):** an overnight agent loop with a verification reject-gate. Each iteration feeds a prompt file plus prior failure logs to a headless agent under a timeout, then a verify script decides pass, retry, or stuck.
@@ -93,7 +83,7 @@ The retirement decision was itself recorded as a decision of record in the /work
 
 ## Multi-model workflow
 
-Beyond the braintrust skill, cross-model adversarial review is a standing habit: Claude and Codex review the same PR with fresh context in separate doc directories, then consolidate and validate each other's findings.
+Cross-model adversarial review is a standing habit: Claude and Codex review the same PR with fresh context in separate doc directories, then consolidate and validate each other's findings.
 I route work by quota deliberately: Sonnet subagents and Codex for mechanical work to stretch Fable 5 usage, and I sometimes run Claude Code sessions inside Codex-created worktrees.
 "Fan out subagents" is probably my most-typed phrase, always with one orchestrator (or me) as the final decision maker.
 

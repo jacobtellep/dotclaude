@@ -80,3 +80,16 @@ __pycache__/
 
 # Misc generated
 .git/
+
+# Statusline probe output
+.statusline-probe.json
+.statusline-probe-env.txt
+
+# Server/runtime state
+policy-limits.json
+remote-settings.json
+gh-pr-status-cache.json
+
+# Loose timestamped backups
+*.bak-*
+*.doctor-bak

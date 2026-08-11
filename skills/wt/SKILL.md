@@ -1,6 +1,6 @@
 ---
 name: wt
-description: "Create a git worktree with a new branch off a target branch, copying env files and installing dependencies."
+description: "Create a git worktree with a new branch off a target branch, copying env files, untracked root Markdown docs, and untracked docs/agents config, and installing dependencies."
 user-invocable: true
 disable-model-invocation: true
 argument-hint: "<new-branch> <target-branch>"
@@ -96,12 +96,23 @@ Run the appropriate command:
 
 If the command fails, report the error and stop.
 
-### Step 10 — Copy env files
+### Step 10 — Copy env files, untracked root Markdown files, and untracked agent config
 
 1. Use Glob to find `.env*` files at `MAIN_REPO_ROOT` root level only (pattern: `.env*`, not recursive)
 2. For each matched file, `cp` it to `WORKTREE_PATH`
-3. Track how many were copied and their names
-4. If none found, note that no env files were found to copy
+3. Find root-level `*.md` files in `MAIN_REPO_ROOT` that git does not track (worktree checkouts only materialize tracked files, so personal docs like `CLAUDE.md`, `CLAUDE.local.md`, and `CODING_STANDARDS.md` would otherwise be missing):
+   - For each `*.md` file at `MAIN_REPO_ROOT` root level, run `git -C "$MAIN_REPO_ROOT" ls-files -- "<name>.md"` — empty output means untracked
+   - `cp` each untracked match to `WORKTREE_PATH`, skipping any name that already exists there
+4. Copy the untracked `docs/agents/` directory if the main repo has one.
+   The engineering skills read `docs/agents/issue-tracker.md`, `docs/agents/triage-labels.md`, and `docs/agents/domain.md`, and these are excluded via `.git/info/exclude`, so a worktree checkout never materializes them:
+   - Check `test -d "$MAIN_REPO_ROOT/docs/agents"`; skip this substep if absent
+   - Confirm it is untracked with `git -C "$MAIN_REPO_ROOT" ls-files -- docs/agents`. Non-empty output means it is tracked and the checkout already has it, so skip
+   - `mkdir -p "$WORKTREE_PATH/docs"` then `cp -R "$MAIN_REPO_ROOT/docs/agents" "$WORKTREE_PATH/docs/"`, skipping if the destination already exists
+5. Track how many env files, Markdown files, and agent config files were copied and their names
+6. If none found in a category, note that none were found to copy
+
+Ignore rules themselves need no copying.
+A linked worktree resolves `info/exclude` from `$GIT_COMMON_DIR`, so the main clone's `.git/info/exclude` already applies to every worktree of that repo.
 
 ### Step 11 — Install dependencies
 
@@ -131,6 +142,8 @@ Worktree created successfully!
   Based on:    <TARGET_BRANCH>
   Path:        <WORKTREE_PATH>
   Env files:   N copied (<comma-separated list of filenames, or "none found">)
+  Local docs:  N copied (<comma-separated list of untracked .md filenames, or "none found">)
+  Agent cfg:   N copied (<comma-separated list of docs/agents filenames, or "none found">)
   Deps:        Installed with <manager> (or "skipped — no lockfile found")
 ```
 

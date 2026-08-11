@@ -1,9 +1,16 @@
 {
   "env": {
-    "SLASH_COMMAND_TOOL_CHAR_BUDGET": "15000"
+    "SLASH_COMMAND_TOOL_CHAR_BUDGET": "15000",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "opus"
   },
   "includeCoAuthoredBy": false,
-  "model": "claude-fable-5",
+  "permissions": {
+    "defaultMode": "auto"
+  },
+  "model": "claude-fable-5[1m]",
+  "skillOverrides": {
+    "asana-comments": "user-invocable-only"
+  },
   "hooks": {
     "PreToolUse": [
       {
@@ -15,35 +22,26 @@
             "timeout": 30
           }
         ]
+      },
+      {
+        "matcher": "^Bash$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/python3 /Users/jacobtellep/.claude/hooks/rm_rf_guard.py --platform claude",
+            "timeout": 5,
+            "statusMessage": "Checking recursive deletion approval"
+          }
+        ]
       }
     ],
     "SessionStart": [
       {
-        "matcher": "",
+        "matcher": "*",
         "hooks": [
           {
             "type": "command",
-            "command": "PATH=\"$HOME/.nvm/versions/node/v22.14.0/bin:$PATH\" gh-axi",
-            "timeout": 10
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "PATH=\"$HOME/.nvm/versions/node/v22.14.0/bin:$PATH\" chrome-devtools-axi",
-            "timeout": 10
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "PATH=\"$HOME/.nvm/versions/node/v22.14.0/bin:$PATH\" lavish-axi",
+            "command": "bash '/Users/jacobtellep/.claude/hooks/herdr-agent-state.sh' session",
             "timeout": 10
           }
         ]
@@ -56,11 +54,8 @@
     "padding": 0
   },
   "enabledPlugins": {
-    "code-simplifier@claude-plugins-official": true,
-    "figma@claude-plugins-official": false,
-    "chrome-devtools-mcp@chrome-devtools-plugins": true,
-    "codex@openai-codex": true,
-    "frontend-design@claude-plugins-official": true
+    "figma@claude-plugins-official": true,
+    "chrome-devtools-mcp@chrome-devtools-plugins": true
   },
   "extraKnownMarketplaces": {
     "chrome-devtools-plugins": {
@@ -79,19 +74,15 @@
   "spinnerVerbs": {
     "mode": "replace",
     "verbs": [
-      "Consulting the Palantir",
       "Forging in Mount Doom",
       "Journeying to Mordor",
       "Summoning the Ents",
       "Crossing the Mines of Moria",
       "Seeking counsel in Rivendell",
       "Lighting the beacons of Gondor",
-      "Speaking friend and entering",
       "Riding to Helm's Deep",
       "Gathering the Fellowship",
       "Whispering to the Ring",
-      "Deciphering Elvish script",
-      "Scouring the Shire",
       "Unraveling Saruman's schemes",
       "Traversing the Paths of the Dead",
       "Searching the archives of Minas Tirith",
@@ -101,7 +92,6 @@
       "Praising the sun",
       "Kindling the First Flame",
       "Rolling through fog gates",
-      "Leveling up at Firelink",
       "Reading a soapstone message",
       "Retrieving lost souls",
       "Reversing hollowing",
@@ -111,47 +101,58 @@
       "Traversing the Abyss",
       "Dying and trying again",
       "Offering humanity",
-      "Awakening in the Hunter's Dream",
       "Gaining insight",
-      "Hunting beasts in Yharnam",
-      "Channeling the Old Blood",
       "Ringing the sinister bell",
       "Entering the Nightmare",
       "Communing with the Great Ones",
       "Performing a visceral attack",
       "Rallying through the pain",
       "Seeking eyes on the inside",
-      "Applying blood gems",
       "Opening the gate to Byrgenwerth",
-      "Fearing the Old Blood",
-      "Granting eyes to a brain",
       "Ascending to the Nightmare of Mensis",
       "Using the Force",
       "Making the Kessel Run",
       "Consulting the Jedi archives",
       "Feeling a disturbance in the Force",
       "Powering up the hyperdrive",
-      "Searching the Death Star plans",
       "Training on Dagobah",
       "Negotiating with Jawas",
       "Deflecting blaster bolts",
       "Meditating in the Jedi Temple",
-      "Decrypting Imperial transmissions",
       "Assembling a lightsaber",
-      "Navigating the asteroid field",
       "Reaching out with feelings",
-      "Executing Order 66"
+      "Executing Order 66",
+      "Summoning Torrent",
+      "Wandering the Lands Between",
+      "Seeking the Great Runes",
+      "Consulting the Two Fingers",
+      "Mending the Elden Ring",
+      "Collecting Korok seeds",
+      "Playing the Song of Time",
+      "Smokes, let's go",
+      "Getting two birds stoned at once",
+      "Worst case Ontario",
+      "Checking the rocket appliances",
+      "Practicing survival of the fitness",
+      "Rounding up shopping carts",
+      "Dodging Mr. Lahey",
+      "Watching for shit winds",
+      "Hunting the samsquanch"
     ]
   },
+  "effortLevel": "medium",
   "tui": "fullscreen",
   "voice": {
     "enabled": true,
     "mode": "hold"
   },
+  "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
+  "editorMode": "normal",
   "verbose": true,
+  "switchModelsOnFlag": false,
+  "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
-  "voiceEnabled": true,
-  "skipDangerousModePermissionPrompt": true
+  "voiceEnabled": true
 }
