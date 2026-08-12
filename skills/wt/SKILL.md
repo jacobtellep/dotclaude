@@ -1,8 +1,7 @@
 ---
 name: wt
-description: "Create a git worktree with a new branch off a target branch, copying env files, untracked root Markdown docs, and untracked docs/agents config, and installing dependencies."
+description: Create a git worktree with a new branch off a target branch, copying env files, untracked root Markdown docs, and untracked docs/agents config, then installing dependencies. Use when work should be isolated in its own worktree, or when the user asks for a new worktree or a fresh branch checkout.
 user-invocable: true
-disable-model-invocation: true
 argument-hint: "<new-branch> <target-branch>"
 allowed-tools: Bash, Read, Glob, AskUserQuestion
 ---

@@ -54,7 +54,8 @@
   },
   "enabledPlugins": {
     "figma@claude-plugins-official": true,
-    "chrome-devtools-mcp@chrome-devtools-plugins": true
+    "chrome-devtools-mcp@chrome-devtools-plugins": true,
+    "codex@openai-codex": true
   },
   "extraKnownMarketplaces": {
     "chrome-devtools-plugins": {
