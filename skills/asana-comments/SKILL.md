@@ -11,7 +11,7 @@ Jake supplies the tasks and intended facts. Keep the wording brief and the write
 
 ## Write the comment
 
-1. Use no more than two sentences unless Jake asks for more.
+1. State the fact in the sentence or two it needs; Jake asks when he wants more.
 2. State the outcome or current truth, not process narration.
 3. Use only facts Jake supplied or that are verified in the current task. You may add a relevant full PR or preview URL and minimal connective wording.
 4. Omit agent, harness, worktree, or internal workflow terminology.

@@ -1,6 +1,6 @@
 ---
 name: playwright-cli
-description: Automate browser interactions, test web pages and work with Playwright tests.
+description: Drive a real browser from the shell with playwright-cli — navigate, click, fill forms, snapshot the accessibility tree, mock requests, record video and traces, manage persisted sessions and storage state. Also covers running, debugging, generating, and healing Playwright tests. Use for scripted browser automation and test work; for performance traces, Lighthouse, or heap snapshots use the Chrome DevTools MCP, and for the user's signed-in Chrome profile use claude-in-chrome.
 allowed-tools: Bash(playwright-cli:*) Bash(npx:*) Bash(npm:*)
 ---
 

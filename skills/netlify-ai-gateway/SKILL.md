@@ -5,7 +5,7 @@ description: Reference for Netlify AI Gateway — the managed proxy that routes 
 
 # Netlify AI Gateway
 
-> **IMPORTANT:** Only use models listed in the "Available Models" section below. AI Gateway does not support every model a provider offers. Using an unsupported model returns an HTTP error from the gateway.
+> Only use models listed in the "Available Models" section below. AI Gateway supports a curated subset, and an unsupported model returns an HTTP error from the gateway.
 
 > **First-deploy requirement:** The AI Gateway only activates after a site has had at least one production deploy. Local dev (`netlify dev`, `@netlify/vite-plugin`) will NOT have gateway access on a brand-new project until you deploy to production once.
 

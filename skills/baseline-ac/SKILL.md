@@ -33,9 +33,9 @@ Five branches, one list.
 
 **Spec authoring.** Prepend the criteria to the spec's Acceptance Criteria section, above the feature-specific ones. Name any criterion the Engineering Context dropped, and why.
 
-**Ticket breakdown.** Apply criteria 8 and 9 per ticket, and propose the split where one fails. Everything beyond the smallest version that solves the stated problem goes on an explicit **Later** list — Later is not a euphemism for sneaking it in.
+**Ticket breakdown.** Apply the last two criteria (one behavioural outcome; light review) per ticket, and propose the split where one fails. Everything beyond the smallest version that solves the stated problem goes on an explicit **Later** list — Later is not a euphemism for sneaking it in.
 
-**Finished diff.** Walk all nine and report which hold and which break. Cite the specific code for each break.
+**Finished diff.** Walk every criterion and report which hold and which break. Cite the specific code for each break.
 
 **Scope growing mid-implementation.** When the work reaches for a fallback, a compatibility shim, a new dependency, a single-caller abstraction, or unasked-for configuration, name the criterion it crosses and get a decision before writing it.
 

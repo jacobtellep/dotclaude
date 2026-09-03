@@ -29,7 +29,7 @@ If the prompt didn't already specify, ask the user a few short questions before 
 
 **If you don't have preferences here, tell me roughly what the app does and I'll pick sensible defaults** — typically Drizzle with timestamp-prefix migrations and a starter schema for the entities the prompt implies.
 
-## CRITICAL: Install Drizzle from the `@beta` dist-tag
+## Install Drizzle from the `@beta` dist-tag
 
 The Netlify Database adapter for Drizzle ORM currently only exists on the `beta` release line of `drizzle-orm`. Install **both** `drizzle-orm` and `drizzle-kit` from the `@beta` dist-tag:
 
@@ -42,7 +42,7 @@ The default `latest` versions do not include the `drizzle-orm/netlify-db` adapte
 
 The `@beta` tag only affects the installed version — imports are written as `drizzle-orm`, `drizzle-orm/pg-core`, and `drizzle-orm/netlify-db` without modification.
 
-## CRITICAL: Use the Netlify CLI for database operations
+## Use the Netlify CLI for database operations
 
 The CLI ships a complete database surface under `netlify database` (alias: `netlify db`) that replaces hand-rolled scripts and direct API/UI work. Reach for these commands first before writing custom tooling. **Requires Netlify CLI 26.0.0+** — if a `netlify database` subcommand isn't recognized, run `npm install -g netlify-cli@latest`.
 
@@ -56,7 +56,7 @@ When a `netlify` command fails, a deploy fails to provision the database, or any
 
 Specific failure modes (like the first-deploy 401) get their own playbooks below. The general rule applies everywhere: a stuck agent surfacing context is far safer than one that wanders off.
 
-## CRITICAL: Never apply migrations to a Netlify-hosted database
+## Never apply migrations to a Netlify-hosted database
 
 The only database you ever apply migrations to yourself is the **local development DB**. For any Netlify-hosted database — production or a deploy preview branch — **Netlify applies migrations automatically during the deploy**. Your job is to create migration files and commit them. The deploy does the rest.
 

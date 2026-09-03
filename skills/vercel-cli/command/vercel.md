@@ -4,19 +4,9 @@ description: Load the Vercel CLI skill for deploying, managing, inspecting, and 
 
 Load the Vercel CLI skill and help with Vercel project deployment, management, inspection, and troubleshooting.
 
-## Workflow
+Use the decision tree in SKILL.md to pick the `references/<topic>.md` file for the task, and `vercel <command> --help` before uncommon or risky flags.
 
-### Step 1: Identify task type from user request
-
-Use the decision tree in SKILL.md to select the relevant reference file.
-
-### Step 2: Read the reference file
-
-Based on task type, read `references/<topic>.md`. Use `vercel <command> --help` for full flag details before using uncommon or risky flags.
-
-### Step 3: Execute task
-
-**Key things to verify:**
+## Before acting
 
 - Run `vercel project inspect --non-interactive` from the intended working directory and confirm the owner and project; stop on `link_required` or a mismatch instead of treating `.vercel/` existence as proof
 - Use `vercel pull` for project settings and environment data under `.vercel/`; use `vercel env pull` for `.env.local` or another file that is already excluded from source control
@@ -26,9 +16,7 @@ Based on task type, read `references/<topic>.md`. Use `vercel <command> --help` 
 - Use first-class CLI commands before `vercel api`
 - Use `vercel curl` to access preview deployments; don't disable protection
 
-### Step 4: Summarize
-
-Report the commands run, meaningful outputs, and any remaining permission, scope, or subscription limits.
+When reporting, include any remaining permission, scope, or subscription limits.
 
 <user-request>
 $ARGUMENTS

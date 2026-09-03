@@ -57,7 +57,7 @@ git config remote.pushDefault origin     # if multiple remotes exist (skips remo
 3. **Always use `--json` with `gh stack view`.** Without `--json`, the command launches an interactive TUI that cannot be operated by agents. There is no other appropriate flag — always pass `--json`.
 4. **Handle multiple remotes.** If more than one remote is configured, pre-configure `git config remote.pushDefault origin`, or pass `--remote <name>` to the commands that accept it: `push`, `submit`, `sync`, `rebase`, and `link`. `checkout`, `modify`, and `trunk` resolve a remote but have **no `--remote` flag** — they rely on `remote.pushDefault`. With multiple remotes and no configured default, these commands exit with an error in non-interactive mode.
 5. **Avoid branches shared across multiple stacks.** If a branch belongs to multiple stacks, commands exit with code 6. Check out a non-shared branch first.
-6. **Plan your stack layers by dependency order before writing code.** Foundational changes (models, APIs, shared utilities) go in lower branches; dependent changes (UI, consumers) go in higher branches. Think through the dependency chain before running `gh stack init`.
+6. **Order layers by dependency.** Foundational changes (models, APIs, shared utilities) go in lower branches; dependent changes (UI, consumers) go in higher branches.
 7. **Use standard `git add` and `git commit` for staging and committing.** This gives you full control over which changes go into each branch. The `-Am` shortcut is available but should not be the default approach—stacked PRs are most effective when each branch contains a deliberate, logical set of changes.
 8. **Navigate down the stack when you need to change a lower layer.** If you're working on a frontend branch and realize you need API changes, don't hack around it at the current layer. Navigate to the appropriate branch (`gh stack down`, `gh stack checkout`, or `gh stack bottom`), make and commit the changes there, run `gh stack rebase --upstack`, then navigate back up to continue.
 9. **Use `gh stack link` for external tool workflows.** When branches are managed by an external tool (jj, Sapling, etc.), use `gh stack link branch-a branch-b`. `link` does not rely on local tracking state and is intended for API-driven PR and stack management. Provide at least two branches/PRs to create or update a stack, or a stack number followed by the new branches/PRs to append them to the top of an existing stack (e.g. `gh stack link 7 branch-c`).
@@ -79,7 +79,7 @@ Each branch in a stack should represent a **discrete, logical unit of work** tha
 
 Stacked branches form a dependency chain: each branch builds on the one below it. This means **foundational changes must go in lower (earlier) branches**, and code that depends on them goes in higher (later) branches.
 
-**Plan your layers before writing code.** For example, a full-stack feature might be structured like this (use branch names relevant to your actual task, not these generic ones):
+For example, a full-stack feature might be structured like this (use branch names relevant to your actual task, not these generic ones):
 
 ```
 main (trunk)

@@ -228,8 +228,7 @@ Map out:
 - Persistence: reload, local/session storage, URL fragments.
 - Navigation: which controls change the URL, back/forward behaviour.
 
-**Important**: Do not just open the app url with playwright-cli, always go through the test to capture any custom setup done there.
-**Important**: Stop the background test when done exploring.
+Go through the seed test rather than opening the app URL directly; the test performs setup the URL alone doesn't. Stop the background test when done exploring.
 
 ### 1.4 Write the spec file
 
